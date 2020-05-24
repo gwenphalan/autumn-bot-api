@@ -1,5 +1,11 @@
 import { Router } from "express";
-import { login, callback, userinfo, logout } from "../controllers/discord";
+import {
+  login,
+  callback,
+  userinfo,
+  logout,
+  userguilds,
+} from "../controllers/discord";
 
 const router = Router();
 
@@ -10,5 +16,7 @@ router.get("/login", login);
 router.get("/logout", logout);
 
 router.get("/userinfo", userinfo);
+
+router.get("/userguilds", userguilds);
 
 export const discordRouter = router;

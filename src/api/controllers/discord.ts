@@ -107,15 +107,23 @@ export const userguilds = async (req: Request, res: Response) => {
 
   const guilds: userGuild[] = [];
 
-  data.forEach(async (guild: userGuild) => {
+  for (let i = 0; i < data.length; i++) {
+    const guild = data[i];
+
     const permissions = new Permissions(guild.permissions);
+
+    const hasPerm = permissions.has("MANAGE_GUILD");
 
     const guildSettings = await getGuildSettings(guild.id);
 
     if (guildSettings) guild.botGuild = true;
 
-    if (permissions.has("MANAGE_GUILD")) guilds.push(guild);
-  });
+    console.log(hasPerm);
 
-  return res.send({ status: 200, message: "SUCCESS", data: data });
+    if (hasPerm) guilds.push(guild);
+
+    console.log(guilds);
+  }
+
+  return res.send({ status: 200, message: "SUCCESS", data: guilds });
 };
