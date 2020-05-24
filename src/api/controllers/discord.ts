@@ -14,7 +14,8 @@ export const login = async (req: Request, res: Response) => {
   );
 };
 
-export const callback = async (req: Request, res: Response) => {
+export const callback = async (_req: Request, res: Response) => {
+  console.log("test");
   res.redirect(`${config.website}/home`);
 };
 
