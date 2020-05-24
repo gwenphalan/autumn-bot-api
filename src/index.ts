@@ -9,7 +9,11 @@ import { config } from "./config";
 
 const app = express();
 
-app.set("view engine", "html");
+app.enable("trust proxy");
+
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(cors());
 
 app.use((_req, res, next) => {
   res.setHeader("X-Powered-By", "Weebs");
@@ -23,15 +27,11 @@ app.use((_req, res, next) => {
   );
   res.setHeader("Content-Security-Policy", "default-src https:");
   res.setHeader("Referrer-Policy", "no-referrer");
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
 
   next();
 });
-
-app.enable("trust proxy");
-
-app.use(bodyParser.json());
-app.use(cookieParser());
-app.use(cors());
 
 app.get("/", (_req, res) => {
   res.redirect(`http://${config.website}/home`);

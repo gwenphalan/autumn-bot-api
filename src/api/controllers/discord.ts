@@ -3,6 +3,7 @@ import fetch from "node-fetch";
 import { config } from "../../config";
 import { Permissions } from "discord.js";
 import { getGuildSettings } from "../../database";
+import btoa from "btoa";
 
 export const login = async (req: Request, res: Response) => {
   res.redirect(
@@ -16,9 +17,7 @@ export const login = async (req: Request, res: Response) => {
 
 export const callback = async (req: Request, res: Response) => {
   const code = req.query.code;
-  const creds = Buffer.from(
-    `${config.clientID}:${config.clientSecret}`
-  ).toString("base64");
+  const creds = btoa(`${config.clientID}:${config.clientSecret}`);
   const response = await fetch(
     `https://discordapp.com/api/oauth2/token?grant_type=authorization_code&code=${code}&redirect_uri=${encodeURIComponent(
       `${req.protocol}://${config.host}/api/discord/callback`
