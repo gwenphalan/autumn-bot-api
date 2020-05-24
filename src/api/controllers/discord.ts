@@ -49,6 +49,13 @@ export const logout = async (_req: Request, res: Response) => {
 export const userinfo = async (req: Request, res: Response) => {
   const access_token = req.cookies.access_token;
 
+  if (!access_token)
+    return res.send({
+      status: 401,
+      message: "UNAUTHORIZED",
+      data: undefined,
+    });
+
   const response = await fetch(`http://discordapp.com/api/users/@me`, {
     method: "POST",
     headers: {
