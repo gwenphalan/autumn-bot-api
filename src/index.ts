@@ -34,7 +34,7 @@ app.use(cors());
 app.use("/api/", api);
 
 app.get("/", (req, res) => {
-  res.redirect(`${req.protocol}://${config.website}/home`);
+  res.redirect(`http://${config.website}/home`);
 });
 
 const port = process.env.PORT || 3000;
