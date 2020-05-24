@@ -9,6 +9,8 @@ import { config } from "./config";
 
 const app = express();
 
+app.set("view engine", "html");
+
 app.use((_req, res, next) => {
   res.setHeader("X-Powered-By", "Weebs");
 
@@ -31,11 +33,11 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());
 
-app.use("/api/", api);
-
 app.get("/", (_req, res) => {
   res.redirect(`http://${config.website}/home`);
 });
+
+app.use("/api/", api);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
