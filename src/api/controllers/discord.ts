@@ -14,15 +14,37 @@ export const login = async (req: Request, res: Response) => {
   );
 };
 
-export const callback = async (_req: Request, res: Response) => {
-  console.log("test");
-  res.send(`${config.website}/home`);
+export const callback = async (req: Request, res: Response) => {
+  const code = req.query.code;
+  const creds = Buffer.from(
+    `${config.clientID}:${config.clientSecret}`
+  ).toString("base64");
+  const response = await fetch(
+    `https://discordapp.com/api/oauth2/token?grant_type=authorization_code&code=${code}&redirect_uri=${encodeURIComponent(
+      `${req.protocol}://${config.host}/api/discord/callback`
+    )}`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Basic ${creds}`,
+      },
+    }
+  );
+  const json = await response.json();
+
+  const expire = new Date(604800000 + Date.now());
+
+  res.cookie("access_token", json.access_token, {
+    expires: expire,
+  });
+
+  res.redirect(`${config.website}/home`);
 };
 
 export const logout = async (_req: Request, res: Response) => {
   res.clearCookie("access_token");
 
-  res.send(`${config.website}/home`);
+  res.redirect(`${config.website}/home`);
 };
 
 export const userinfo = async (req: Request, res: Response) => {
