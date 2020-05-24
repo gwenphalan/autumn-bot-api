@@ -33,7 +33,7 @@ app.use(cors());
 
 app.use("/api/", api);
 
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
   res.redirect(`http://${config.website}/home`);
 });
 
