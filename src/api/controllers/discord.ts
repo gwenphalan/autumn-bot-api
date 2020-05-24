@@ -16,13 +16,13 @@ export const login = async (req: Request, res: Response) => {
 
 export const callback = async (_req: Request, res: Response) => {
   console.log("test");
-  res.redirect(`${config.website}/home`);
+  res.send(`${config.website}/home`);
 };
 
 export const logout = async (_req: Request, res: Response) => {
   res.clearCookie("access_token");
 
-  res.redirect(`${config.website}/home`);
+  res.send(`${config.website}/home`);
 };
 
 export const userinfo = async (req: Request, res: Response) => {
