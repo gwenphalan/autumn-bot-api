@@ -33,7 +33,7 @@ app.use((_req, res, next) => {
   next();
 });
 
-app.get("/", (_req, res) => {
+app.get("/*", (_req, res) => {
   res.redirect(`${config.website}/home`);
 });
 
