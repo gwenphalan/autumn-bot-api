@@ -1,7 +1,7 @@
 /// <reference types="node" />
 
 export default {
-  token: "NjczNDI0MTkzODYxMTg5NjYx.XsiPOQ.DKYIPa9-7i9lXp473-oj_s1LIl8",
+  token: "NjczNDI0MTkzODYxMTg5NjYx.XsohBQ.Tznq9VoaX1eCcw3OFxhPYNynrHc",
   clientID: "673424193861189661",
   clientSecret: "05BUUrB7-0SJiz1H7NbBVt3sWR3Wo7mR",
   host: "localhost:3000",
