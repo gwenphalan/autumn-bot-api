@@ -34,7 +34,7 @@ app.use((_req, res, next) => {
 });
 
 app.get("/", (_req, res) => {
-  res.redirect(`http://${config.website}/home`);
+  res.redirect(`${config.website}/home`);
 });
 
 app.use("/api/", api);
