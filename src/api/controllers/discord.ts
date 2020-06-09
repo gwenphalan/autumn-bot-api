@@ -47,6 +47,8 @@ export const callback = async (req: Request, res: Response) => {
       expires: expire,
     });
 
+  console.log(req.cookies);
+
   return res.redirect(`${config.website}/home`);
 };
 
