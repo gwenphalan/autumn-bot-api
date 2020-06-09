@@ -56,7 +56,6 @@ export const logout = async (_req: Request, res: Response) => {
 
 export const userinfo = async (req: Request, res: Response) => {
   const access_token = req.cookies.access_token;
-  console.log(req);
 
   if (!access_token) return res.send(new ApiError(401, "Unauthorized"));
 
