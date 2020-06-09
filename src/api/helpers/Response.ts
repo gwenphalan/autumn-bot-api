@@ -3,8 +3,8 @@ import { Response } from "express";
 export class ApiResponse {
   statusCode: number;
   status: string;
-  data: string | null;
-  constructor(statusCode: number, data?: string) {
+  data: any | null;
+  constructor(statusCode: number, data?: any) {
     this.statusCode = statusCode;
     this.status = statusCode === 200 ? "success" : "error";
     this.data = data || null;

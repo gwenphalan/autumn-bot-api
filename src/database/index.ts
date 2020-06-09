@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import { config } from '../config';
-import { GuildSettings } from './schemas/GuildSettings';
+import mongoose from "mongoose";
+import { config } from "../config";
+import { GuildSettings } from "./schemas/GuildSettings";
 
 // Connect to MongoDB
 mongoose.connect(config.mongoString, {
@@ -12,10 +12,10 @@ mongoose.connect(config.mongoString, {
 const db = mongoose.connection;
 
 // Log Database Errors
-db.on('error', (err) => console.error(err));
+db.on("error", (err) => console.error(err));
 
 // Log a message once the Database connection is made
-db.once('open', () => console.log(`Connected to MongoDB Atlas at ${db.name}!`));
+db.once("open", () => console.log(`Connected to MongoDB Atlas at ${db.name}!`));
 
 // Export our database with the different Schemas
 export const database = {
@@ -24,20 +24,20 @@ export const database = {
 
 // Helper function to get a guild's settings
 export const getGuildSettings = async (guildId: string) => {
-  return await GuildSettings.findOne({ guild: guildId });
+  const settings = await GuildSettings.findOne({ guild: guildId });
+  return settings;
 };
 
 export const updateGuildSettings = async (
   guildId: string,
   settings: GuildSettings
 ) => {
-  console.log(settings);
   await GuildSettings.updateOne({ guild: guildId }, settings);
 };
 
 export type profileProperty =
-  | 'color'
-  | 'pronouns'
-  | 'gender'
-  | 'age'
-  | 'biography';
+  | "color"
+  | "pronouns"
+  | "gender"
+  | "age"
+  | "biography";

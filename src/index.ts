@@ -5,8 +5,6 @@ import cors from "cors";
 
 import { api } from "./api/";
 
-import { config } from "./config";
-
 const app = express();
 
 app.enable("trust proxy");
@@ -25,16 +23,12 @@ app.use((_req, res, next) => {
     "Strict-Transport-Security",
     "max-age=31536000; includeSubdomains"
   );
-  res.setHeader("Content-Security-Policy", "default-src https:");
+  res.setHeader("Content-Security-Policy", "default-src http:");
   res.setHeader("Referrer-Policy", "no-referrer");
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
   res.setHeader("Access-Control-Allow-Credentials", "true");
 
   next();
-});
-
-app.get("/*", (_req, res) => {
-  res.redirect(`${config.website}/home`);
 });
 
 app.use("/api/", api);

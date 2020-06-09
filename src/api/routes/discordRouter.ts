@@ -8,7 +8,7 @@ import {
   invite,
   inviteCallback,
   getguild,
-  // updateGuild,
+  updateGuild,
 } from "../controllers/discord";
 
 const router = Router();
@@ -29,13 +29,6 @@ router.get("/invite/:guild", invite);
 
 router.get("/guild/:guild", getguild);
 
-router.post("/update/:guild/", (req, res) => {
-  console.log(req.cookies);
-  res.send({
-    status: 500,
-    message: "cunt",
-    data: req.body,
-  });
-});
+router.post("/update/:guild/", updateGuild);
 
 export const discordRouter = router;
