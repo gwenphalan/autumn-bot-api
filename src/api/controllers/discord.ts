@@ -251,7 +251,7 @@ export const updateGuild = async (req: Request, res: Response) => {
 
   const client = new net.Socket();
 
-  client.connect({ port: 8124 }, () => {
+  client.connect({ port: 8124, host: "51.178.182.144" }, () => {
     const update = {
       guild: req.params.guild,
       module: req.body.module,
