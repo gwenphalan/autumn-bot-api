@@ -5,6 +5,6 @@ export default {
   clientID: process.env.API_CLIENT_ID,
   clientSecret: process.env.API_CLIENT_SECRET,
   host: "www.autumnbot.net",
-  website: "https://autumnbot.net",
+  website: "https://www.autumnbot.net",
   mongoString: process.env.API_MONGO_STRING,
 };
