@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 
 import { api } from "./api/";
+import { config } from "./config";
 
 const app = express();
 
@@ -32,6 +33,10 @@ app.use((_req, res, next) => {
 });
 
 app.use("/api/", api);
+
+app.get("/*", (_req, res) => {
+  res.redirect(config.website);
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
