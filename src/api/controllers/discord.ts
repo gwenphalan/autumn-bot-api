@@ -18,8 +18,6 @@ export const login = async (req: Request, res: Response) => {
 
 export const callback = async (req: Request, res: Response) => {
   const code = req.query.code;
-  console.log(req.host);
-  console.log(req.cookies);
 
   const response = await fetch(`https://discordapp.com/api/v6/oauth2/token`, {
     method: "POST",
@@ -50,9 +48,6 @@ export const callback = async (req: Request, res: Response) => {
       expires: expire,
     });
 
-  console.log(req.cookies);
-  console.log(json);
-
   return res.redirect(`${config.website}/home`);
 };
 
@@ -64,8 +59,6 @@ export const logout = async (_req: Request, res: Response) => {
 
 export const userinfo = async (req: Request, res: Response) => {
   const access_token = req.cookies.access_token;
-
-  console.log(req.cookies);
 
   if (!access_token) return res.send(new ApiError(401, "Unauthorized"));
 
