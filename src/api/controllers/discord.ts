@@ -65,6 +65,8 @@ export const logout = async (_req: Request, res: Response) => {
 export const userinfo = async (req: Request, res: Response) => {
   const access_token = req.cookies.access_token;
 
+  console.log(req.cookies);
+
   if (!access_token) return res.send(new ApiError(401, "Unauthorized"));
 
   const response = await fetch(`http://discordapp.com/api/users/@me`, {
@@ -142,24 +144,21 @@ export const getguild = async (req: Request, res: Response) => {
   if (!access_token || data.message === "401: Unauthorized")
     return res.send(new ApiError(401, "Unauthorized"));
 
-  const guilds: userGuild[] = [];
+  const guilds = data;
 
-  for (let i = 0; i < data.length; i++) {
-    const guild = data[i];
+  const userGuild = guilds.find((g: any) => g.id === req.params.guild);
 
-    const permissions = new Permissions(guild.permissions);
+  if (!userGuild) return res.send(new ApiError(401, "Unauthorized"));
 
-    const hasPerm = permissions.has("MANAGE_GUILD");
+  const permissions = new Permissions(userGuild.permissions);
 
-    const guildSettings = await getGuildSettings(guild.id);
+  const hasPerm = permissions.has("MANAGE_GUILD");
 
-    if (guildSettings) guild.botGuild = true;
+  const guildSettings = await getGuildSettings(userGuild.id);
 
-    if (hasPerm) guilds.push(guild);
-  }
+  const botGuild = guildSettings ? true : false;
 
-  if (!guilds || !guilds.find((guild) => (guild.id = req.params.guild)))
-    return res.send(new ApiError(401, "Unauthorized"));
+  if (!hasPerm || !botGuild) return res.send(new ApiError(401, "Unauthorized"));
 
   const guildResponse = await fetch(
     `http://discordapp.com/api/guilds/${req.params.guild}`,
