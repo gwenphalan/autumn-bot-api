@@ -275,7 +275,9 @@ export const updateGuild = async (req: Request, res: Response) => {
 
   client.on("end", function () {});
 
-  client.on("error", (_err) => {
+  client.on("error", (err) => {
+    console.log(err);
+
     res.send(new ApiError(500, "Internal Server Error"));
   });
 
