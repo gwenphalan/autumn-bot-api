@@ -26,7 +26,7 @@ app.use((_req, res, next) => {
   );
   res.setHeader("Content-Security-Policy", "default-src http:");
   res.setHeader("Referrer-Policy", "no-referrer");
-  res.setHeader("Access-Control-Allow-Origin", "https://www.autumnbot.net/");
+  res.setHeader("Access-Control-Allow-Origin", "https://www.autumnbot.net");
   res.setHeader("Access-Control-Allow-Credentials", "true");
 
   next();
