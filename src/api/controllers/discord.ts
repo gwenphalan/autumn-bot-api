@@ -28,7 +28,10 @@ export const callback = async (req: Request, res: Response) => {
       client_id: config.clientID,
       client_secret: config.clientSecret,
       grant_type: "authorization_code",
-      redirect_uri: `http://localhost:4200/api/discord/callback`,
+      redirect_uri:
+        process.env.NODE_ENV === "development"
+          ? `http://localhost:4200/api/discord/callback`
+          : `https://api.autumnbot.net/api/discord/callback`,
       scope: "identify%20guilds",
     }),
     headers: {
