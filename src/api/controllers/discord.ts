@@ -31,7 +31,7 @@ export const callback = async (req: Request, res: Response) => {
       redirect_uri:
         process.env.NODE_ENV === "development"
           ? `http://localhost:4200/api/discord/callback`
-          : `https://api.autumnbot.net/api/discord/callback`,
+          : `https://www.autumnbot.net/api/discord/callback`,
       scope: "identify%20guilds",
     }),
     headers: {
