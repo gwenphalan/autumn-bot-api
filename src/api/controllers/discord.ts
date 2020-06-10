@@ -45,10 +45,10 @@ export const callback = async (req: Request, res: Response) => {
   if (json.access_token)
     res.cookie("access_token", json.access_token, {
       expires: expire,
-      domain: "www.autumnbot.net",
     });
 
   console.log(req.cookies);
+  console.log(json);
 
   return res.redirect(`${config.website}/home`);
 };
