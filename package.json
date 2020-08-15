@@ -15,7 +15,7 @@
     "clean": "rm -rf dist/*",
     "reinstall": "npm run cleanCache && npm run deleteModules && npm run deleteLock && npm run installModules",
     "build": "tsc",
-    "start": "pm2 start --name AutumnBotAPI npm -- run prod",
+    "start": "npm run prod",
     "cleanCache": "npm cache clean --force",
     "deleteModules": "rm -rf node_modules/*",
     "deleteLock": "rm yarn.lock",

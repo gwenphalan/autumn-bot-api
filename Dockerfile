@@ -4,7 +4,7 @@ WORKDIR /src
 
 RUN apt-get update && apt-get install -y --no-install-recommends build-essential && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-EXPOSE 8125
+EXPOSE 4200
 
 COPY package.json /src/package.json
 RUN npm install
