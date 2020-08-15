@@ -253,7 +253,7 @@ export const updateGuild = async (req: Request, res: Response) => {
 
   const client = new net.Socket();
 
-  client.connect({ port: 8124, host: "0.0.0.0" }, () => {
+  client.connect({ port: 8124, host: "localhost" }, () => {
     console.log("Connected to bot.");
 
     const update = {
