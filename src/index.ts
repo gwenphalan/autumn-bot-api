@@ -26,7 +26,7 @@ app.use((_req, res, next) => {
   );
   res.setHeader("Content-Security-Policy", "default-src http:");
   res.setHeader("Referrer-Policy", "no-referrer");
-  res.setHeader("Access-Control-Allow-Origin", "https://www.autumnbot.net");
+  res.setHeader("Access-Control-Allow-Origin", "https://autumnbot.net");
   res.setHeader("Access-Control-Allow-Credentials", "true");
 
   next();
@@ -34,7 +34,9 @@ app.use((_req, res, next) => {
 
 app.use("/api/", api);
 
-app.get("/*", (_req, res) => {
+app.get("/*", (req, res) => {
+  console.log("GET `/*` from " + req.ip);
+
   res.redirect(config.website);
 });
 
