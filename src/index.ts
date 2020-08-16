@@ -4,7 +4,6 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 
 import { api } from "./api/";
-import { config } from "./config";
 
 const app = express();
 
