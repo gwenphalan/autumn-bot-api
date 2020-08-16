@@ -37,7 +37,9 @@ app.use("/api/", api);
 app.get("/*", (req, res) => {
   console.log(`GET ${req.path} FROM ${req.ip}`);
 
-  res.redirect(config.website);
+  res.send(
+    '404: Not Found\n\nIf you are trying to visit the Autumn Bot website, you may <a href="https://autumnbot.net">here<a>'
+  );
 });
 
 const port = 4200;
