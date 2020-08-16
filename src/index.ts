@@ -35,7 +35,7 @@ app.use((_req, res, next) => {
 app.use("/api/", api);
 
 app.get("/*", (req, res) => {
-  console.log("GET `/*` from " + req.ip);
+  console.log(`GET ${req.path} FROM ${req.ip}`);
 
   res.redirect(config.website);
 });
