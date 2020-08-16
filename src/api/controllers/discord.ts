@@ -3,7 +3,6 @@ import fetch from "node-fetch";
 import { config } from "../../config";
 import { Permissions } from "discord.js";
 import { getGuildSettings, updateGuildSettings } from "../../database";
-import net from "net";
 import { ApiError, ApiResponse } from "../helpers/Response";
 
 export const login = async (req: Request, res: Response) => {
@@ -125,6 +124,8 @@ export const userguilds = async (req: Request, res: Response) => {
 export const getguild = async (req: Request, res: Response) => {
   const access_token = req.cookies.access_token;
 
+  let i = 0;
+
   const response = await fetch(`http://discordapp.com/api/users/@me/guilds`, {
     method: "POST",
     headers: {
@@ -134,13 +135,18 @@ export const getguild = async (req: Request, res: Response) => {
 
   const data = await response.json();
 
+  console.log(i++);
+
   if (!access_token || data.message === "401: Unauthorized")
     return res.send(new ApiError(401, "Unauthorized"));
+
+  console.log(i++);
 
   const guilds = data;
 
   const userGuild = guilds.find((g: any) => g.id === req.params.guild);
 
+  console.log(i++);
   if (!userGuild) return res.send(new ApiError(401, "Unauthorized"));
 
   const permissions = new Permissions(userGuild.permissions);
@@ -151,6 +157,7 @@ export const getguild = async (req: Request, res: Response) => {
 
   const botGuild = guildSettings ? true : false;
 
+  console.log(i++);
   if (!hasPerm || !botGuild) return res.send(new ApiError(401, "Unauthorized"));
 
   const guildResponse = await fetch(
@@ -165,6 +172,7 @@ export const getguild = async (req: Request, res: Response) => {
 
   const guild = await guildResponse.json();
 
+  console.log(i++);
   if (guild.message === "401: Unauthorized")
     return res.send(new ApiError(401, "Unauthorized"));
 
@@ -180,6 +188,7 @@ export const getguild = async (req: Request, res: Response) => {
 
   const channels = await channelResponse.json();
 
+  console.log(i++);
   if (channels.message === "401: Unauthorized")
     return res.send(new ApiError(401, "Unauthorized"));
 
@@ -187,9 +196,13 @@ export const getguild = async (req: Request, res: Response) => {
 
   const settings = await getGuildSettings(req.params.guild);
 
+  console.log(i++);
+
   if (!settings) return res.send(new ApiError(404, "No Settings Entry Found"));
 
   guild.settings = settings;
+
+  console.log(i++);
 
   return res.send(new ApiResponse(200, guild));
 };
@@ -247,39 +260,13 @@ export const updateGuild = async (req: Request, res: Response) => {
   if (!req.body.settings)
     return res.send(new ApiError(400, "No Settings Provided"));
 
-  await updateGuildSettings(req.params.guild, req.body.settings);
+  await updateGuildSettings(req.params.guild, req.body.settings).catch(
+    (error) => {
+      return res.send(new ApiResponse(500, error.message || error));
+    }
+  );
 
-  console.log("Connecting to bot...");
-
-  const client = new net.Socket();
-
-  client.connect({ port: 8124, host: "localhost" }, () => {
-    console.log("Connected to bot.");
-
-    const update = {
-      guild: req.params.guild,
-      module: req.body.module,
-      settings: req.body.settings,
-    };
-    client.write(JSON.stringify(update));
-  });
-
-  client.on("data", function (d) {
-    const data = JSON.parse(d.toString());
-
-    if (data.message === "Success") res.send(new ApiResponse(200, data));
-    else res.send(new ApiError(data.status, data.message));
-
-    client.end();
-  });
-
-  client.on("end", function () {});
-
-  client.on("error", (err) => {
-    console.log(err);
-
-    res.send(new ApiError(500, "Internal Server Error"));
-  });
+  res.send(new ApiResponse(200, data));
 
   return;
 };
