@@ -31,7 +31,7 @@ export const getStyle1 = async (req: Request, res: Response) => {
     typeof body.memberName === "string" && body.memberName
       ? body.memberName
       : undefined,
-    typeof body.avatarURL === "string" && body.avatarUrl
+    typeof body.avatarURL === "string" && body.avatarURL
       ? checkImgURL(body.avatarURL)
       : undefined,
     typeof body.backgroundImage === "string" && body.backgroundImage
