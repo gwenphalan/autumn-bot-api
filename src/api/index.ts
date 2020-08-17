@@ -1,6 +1,6 @@
 import express from "express";
 
-import { discordRouter } from "./routes";
+import { discordRouter, botRouter, cardRouter } from "./routes";
 
 export const api = express();
 
@@ -9,3 +9,7 @@ api.get("/test", (_req, res) => {
 });
 
 api.use("/discord", discordRouter);
+
+api.use("/bot", botRouter);
+
+api.use("/cards", cardRouter);

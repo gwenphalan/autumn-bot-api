@@ -41,7 +41,7 @@ app.get("/*", (req, res) => {
   );
 });
 
-const port = 4200;
+const port = process.env.NODE_ENV !== "development" ? 4200 : 8080;
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

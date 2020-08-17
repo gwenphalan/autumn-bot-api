@@ -124,8 +124,6 @@ export const userguilds = async (req: Request, res: Response) => {
 export const getguild = async (req: Request, res: Response) => {
   const access_token = req.cookies.access_token;
 
-  let i = 0;
-
   const response = await fetch(`http://discordapp.com/api/users/@me/guilds`, {
     method: "POST",
     headers: {
@@ -135,18 +133,13 @@ export const getguild = async (req: Request, res: Response) => {
 
   const data = await response.json();
 
-  console.log(i++);
-
   if (!access_token || data.message === "401: Unauthorized")
     return res.send(new ApiError(401, "Unauthorized"));
-
-  console.log(i++);
 
   const guilds = data;
 
   const userGuild = guilds.find((g: any) => g.id === req.params.guild);
 
-  console.log(i++);
   if (!userGuild) return res.send(new ApiError(401, "Unauthorized"));
 
   const permissions = new Permissions(userGuild.permissions);
@@ -157,7 +150,6 @@ export const getguild = async (req: Request, res: Response) => {
 
   const botGuild = guildSettings ? true : false;
 
-  console.log(i++);
   if (!hasPerm || !botGuild) return res.send(new ApiError(401, "Unauthorized"));
 
   const guildResponse = await fetch(
@@ -172,7 +164,6 @@ export const getguild = async (req: Request, res: Response) => {
 
   const guild = await guildResponse.json();
 
-  console.log(i++);
   if (guild.message === "401: Unauthorized")
     return res.send(new ApiError(401, "Unauthorized"));
 
@@ -187,8 +178,6 @@ export const getguild = async (req: Request, res: Response) => {
   );
 
   const channels = await channelResponse.json();
-
-  console.log(i++);
   if (channels.message === "401: Unauthorized")
     return res.send(new ApiError(401, "Unauthorized"));
 
@@ -196,13 +185,9 @@ export const getguild = async (req: Request, res: Response) => {
 
   const settings = await getGuildSettings(req.params.guild);
 
-  console.log(i++);
-
   if (!settings) return res.send(new ApiError(404, "No Settings Entry Found"));
 
   guild.settings = settings;
-
-  console.log(i++);
 
   return res.send(new ApiResponse(200, guild));
 };
